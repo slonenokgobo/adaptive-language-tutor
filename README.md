@@ -34,87 +34,52 @@ learner profile + vocabulary + grammar history
 
 Vocabulary exposure is counted with exact, Unicode-aware matching. This is portable across writing systems; add the forms the learner should recognise to the vocabulary list.
 
-## Quick start
+## Start learning
 
-Requirements: Python 3.10 or newer. No third-party Python packages are needed for the core workflow.
+This is a workspace for an AI agent, rather than a standalone web app. Install and sign in to one of the supported agent harnesses below, download or clone this repository, and open it as a project. After that, learning is entirely conversational—there are no Python commands to run.
 
-Create a private learner workspace:
+| Harness | One-time setup | Open this project | Why it works |
+|---|---|---|---|
+| [Codex](https://openai.com/codex/get-started/) | Install or open the Codex app and sign in. | Create or open a project pointing at this folder. | Codex reads the repository's `AGENTS.md` instructions. |
+| [Claude Code](https://docs.anthropic.com/en/docs/claude-code/getting-started) | Install Claude Code and sign in. | Open a terminal in this folder and start Claude Code. | `CLAUDE.md` loads the shared tutor instructions from `AGENTS.md`. |
+| [OpenClaw](https://docs.openclaw.ai/start/openclaw) | Complete OpenClaw's onboarding. | Set this folder as an agent workspace, then begin a new conversation with that agent. | OpenClaw loads root `AGENTS.md` and the project skills under `.agents/skills/`. |
+| Other agentic IDEs and terminal agents | Install and sign in to your preferred agent. | Open this folder and say “Read `AGENTS.md`, then set up my language tutor.” | The shared instructions are plain Markdown, so any agent with file access can follow them. |
 
-```bash
-python3 scripts/init_learner.py
-```
+The agent harness may have its own installation or account setup. Those are one-time platform steps; the tutor itself never asks a learner to operate its scripts or files.
 
-This creates the following ignored files:
+When the project is open, say:
 
-```text
-data/
-├── learner.json       # learner configuration
-├── vocabulary.md      # one word, phrase, or sentence per line
-├── gramma.md          # grammar constructions encountered in stories
-├── STORIES.md         # story index
-└── stories/           # generated Markdown stories and optional audio
-```
+> Set up my language tutor.
 
-Edit `data/learner.json` before starting. Its key settings are:
+The tutor will ask a few ordinary questions—what you want to learn, your current level, the language you want explanations in, your goals, and your interests. It creates and maintains your private learning space for you. You do not need to install packages, edit configuration files, or run commands.
 
-```json
-{
-  "name": "Your name",
-  "language": "Target language",
-  "locale": "es-ES",
-  "translation_language": "English",
-  "level": "A2",
-  "goal": "hold everyday conversations",
-  "interests": ["film", "technology"],
-  "tts_voice": "Optional installed macOS voice"
-}
-```
+Once set up, use natural requests such as:
 
-Add the learner's existing vocabulary to `data/vocabulary.md`, one entry per line. Then use the agent in a Codex-compatible interface to request a story, a translation, or learning statistics.
+- “I want to learn European Portuguese at A2 level for travel. I like cinema and cooking.”
+- “Here are the words I learned today: chegar, embora, com fome.”
+- “Make me a short, funny story for today.”
+- “What should I revise next?”
+- “Show my learning progress.”
+- “Read my latest story aloud.”
 
-## Useful commands
+You can change direction at any time: “Make the stories harder,” “I now want explanations in Spanish,” or “Focus on vocabulary for work.” The tutor updates the learning plan and uses it for future practice.
 
-```bash
-# Show vocabulary sorted by exposure count
-python3 scripts/count_words.py
+## Behind the scenes
 
-# Find vocabulary that has not appeared in a story
-python3 scripts/count_words.py --zero
+The tutor keeps its private working files in `data/`: your profile, vocabulary, grammar history, generated stories, and optional audio. The folder is created automatically and is ignored by Git. The scripts and agent skills in this repository calculate exposure counts, progress statistics, and narration when the tutor needs them; they are not part of the learner-facing workflow.
 
-# Select the next 15 low-exposure items for a story
-python3 scripts/count_words.py --least 15 --json
-
-# Show story, vocabulary, and grammar totals
-python3 .claude/skills/stats/scripts/stats.py
-
-# Narrate a story; requires OPENAI_API_KEY for OpenAI TTS,
-# otherwise uses the configured macOS voice when available
-python3 .claude/skills/read-story/scripts/read_story.py data/stories/001-example-story.md
-```
-
-### Multiple learners or a custom data location
-
-Every tool reads `data/` by default. Set `TUTOR_DATA_DIR` to isolate learners or store their data outside the repository:
-
-```bash
-TUTOR_DATA_DIR=/secure/path/learner python3 scripts/count_words.py --least 15
-```
-
-Run the initializer with the same setting to create that workspace:
-
-```bash
-TUTOR_DATA_DIR=/secure/path/learner python3 scripts/init_learner.py
-```
+For people maintaining or extending the engine, `scripts/init_learner.py` creates the private workspace and the optional skills provide statistics and narration. Each tool reads `data/` by default, or the location specified by `TUTOR_DATA_DIR`.
 
 ## Repository layout
 
 | Path | Purpose |
 |---|---|
 | `AGENTS.md` | The agent's teaching and story-generation rules. |
+| `CLAUDE.md` | Claude Code entry point; it imports the shared rules. |
 | `templates/` | Safe starter files copied into a learner workspace. |
 | `scripts/init_learner.py` | Creates a private workspace without overwriting existing files. |
 | `scripts/count_words.py` | Calculates vocabulary exposure across stories. |
-| `.claude/skills/` | Optional agent skills for counts, statistics, and narration. |
+| `.claude/skills/` and `.agents/skills/` | Claude Code and OpenClaw skill entry points for counts, statistics, and narration. |
 | `data/` | Private, generated learner material; always ignored by Git. |
 
 ## Privacy and publishing
