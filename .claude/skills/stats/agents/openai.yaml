@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tutor Stats"
+  short_description: "Show story, vocabulary, and grammar totals."
+  default_prompt: "Use $stats to show the Portuguese tutor project totals."

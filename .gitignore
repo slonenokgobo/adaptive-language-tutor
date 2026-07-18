@@ -1,0 +1,11 @@
+# Learner-specific, generated workspace. Keep this private when publishing the tutor.
+/data/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Local environment and editor files
+.env
+.venv/
+.DS_Store

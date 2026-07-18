@@ -1,0 +1,4 @@
+interface:
+  display_name: "Read Story"
+  short_description: "Generate and reuse Portuguese story audio."
+  default_prompt: "Use $read-story to read a story aloud and save its audio file."

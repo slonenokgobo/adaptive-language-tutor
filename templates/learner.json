@@ -1,0 +1,12 @@
+{
+  "name": "Your name",
+  "language": "Target language",
+  "locale": "BCP 47 language tag, for example es-ES",
+  "translation_language": "English",
+  "level": "A2",
+  "goal": "enrich vocabulary",
+  "interests": [
+    "technology"
+  ],
+  "tts_voice": "Optional installed macOS voice"
+}
