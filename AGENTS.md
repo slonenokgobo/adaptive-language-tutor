@@ -42,6 +42,7 @@ When asked to generate a story:
 9. **Update `data/STORIES.md`** — add a row to the index table: number, title, file link, date, level, and main themes/vocabulary covered.
 10. **Update `data/vocabulary.md`** — after the story is generated, append the new words introduced in step 4 to the end of `data/vocabulary.md`, following the file's existing format (one item per line, blank line between items). Append only; never rewrite or reorder the learner's existing entries.
 11. **Update `data/gramma.md`** — record every construction shown in the story's `Construções gramaticais` section. For an existing construction, update its story list and exposure count; otherwise append a row. Prefer constructions with few or no previous exposures when choosing the 2–4 items.
+12. **Present available skills** — after saving and presenting a story, include a compact “Available skills” list containing only the tutor's dedicated learner-facing skills: read the story aloud, show learning statistics, and show vocabulary exposure counts. Do not include general conversational actions or internal implementation details.
 
 ## Files
 
